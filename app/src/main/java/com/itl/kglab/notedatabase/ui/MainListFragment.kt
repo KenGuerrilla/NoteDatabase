@@ -24,7 +24,7 @@ class MainListFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.textView.setOnClickListener {
+        binding.btCreateNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainListFragment_to_editNoteFragment)
         }
     }
