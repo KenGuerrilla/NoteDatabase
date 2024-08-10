@@ -3,7 +3,7 @@ package com.itl.kglab.notedatabase.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.itl.kglab.notedatabase.NoteData
+import com.itl.kglab.notedatabase.db.NoteData
 import com.itl.kglab.notedatabase.databinding.ListNoteItemBinding
 
 class NoteListAdapter(
