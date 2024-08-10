@@ -2,11 +2,21 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
     namespace = "com.itl.kglab.notedatabase"
     compileSdk = 34
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
+//    ksp {
+//        arg("option_name", "option_value")
+//    }
+
 
     defaultConfig {
         applicationId = "com.itl.kglab.notedatabase"
@@ -49,7 +59,7 @@ dependencies {
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.room)
     annotationProcessor(libs.androidx.room.compiler)
-//    ksp(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

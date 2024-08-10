@@ -1,26 +1,29 @@
 package com.itl.kglab.notedatabase.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.itl.kglab.notedatabase.MainViewModel
+import com.itl.kglab.notedatabase.MainListViewModel
 import com.itl.kglab.notedatabase.R
 import com.itl.kglab.notedatabase.databinding.FragmentMainListBinding
+import com.itl.kglab.notedatabase.ui.adapter.NoteListAdapter
+import com.itl.kglab.notedatabase.ui.state.MainListViewState
 
-class MainListFragment : Fragment() {
+class MainListFragment : BaseFragment() {
 
     private var _binding: FragmentMainListBinding? = null
     private val binding: FragmentMainListBinding get() = _binding!!
 
     private val noteListAdapter: NoteListAdapter = NoteListAdapter()
 
-    private val activityViewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainListViewModel by viewModels {
+        MainListViewModel.Factory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +32,23 @@ class MainListFragment : Fragment() {
         _binding = FragmentMainListBinding.inflate(inflater, container, false)
         initView()
         initAdapter()
+        initLiveData()
         return binding.root
+    }
+
+    private fun initLiveData() {
+        viewModel.viewStateLiveData.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                MainListViewState.Loading -> {
+                    showLoading()
+                }
+                is MainListViewState.UpdateView -> {
+                    val list = state.noteList
+                    noteListAdapter.updateNoteList(list)
+                    dismissLoading()
+                }
+            }
+        }
     }
 
     private fun initAdapter() {
@@ -47,8 +66,20 @@ class MainListFragment : Fragment() {
 
     private fun initView() {
         binding.btCreateNote.setOnClickListener {
-            findNavController().navigate(R.id.action_mainListFragment_to_editNoteFragment)
+//            findNavController().navigate(R.id.action_mainListFragment_to_editNoteFragment)
+            viewModel.addNote()
         }
     }
 
+
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNoteList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

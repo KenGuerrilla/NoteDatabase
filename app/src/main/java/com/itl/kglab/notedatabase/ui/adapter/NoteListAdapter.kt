@@ -1,4 +1,4 @@
-package com.itl.kglab.notedatabase.ui
+package com.itl.kglab.notedatabase.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,18 +7,12 @@ import com.itl.kglab.notedatabase.db.NoteData
 import com.itl.kglab.notedatabase.databinding.ListNoteItemBinding
 
 class NoteListAdapter(
-    private val noteList: MutableList<NoteData> = mutableListOf()
+    private var noteList: List<NoteData> = mutableListOf()
 ) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
-    fun addNoteList(list: List<NoteData>) {
-        noteList.addAll(list)
-//        notifyItemRangeInserted(noteList.size -list.size, noteList.size)
+    fun updateNoteList(list: List<NoteData>) {
+        noteList = list
         notifyDataSetChanged()
-    }
-
-    fun addNote(note: NoteData) {
-        noteList.add(note)
-        notifyItemInserted(noteList.size - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
