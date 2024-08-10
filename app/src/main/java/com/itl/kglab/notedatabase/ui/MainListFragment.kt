@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.itl.kglab.notedatabase.MainViewModel
 import com.itl.kglab.notedatabase.NoteData
 import com.itl.kglab.notedatabase.R
 import com.itl.kglab.notedatabase.databinding.FragmentMainListBinding
@@ -18,6 +20,8 @@ class MainListFragment : Fragment() {
     private val binding: FragmentMainListBinding get() = _binding!!
 
     private val noteListAdapter: NoteListAdapter = NoteListAdapter()
+
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,14 +54,7 @@ class MainListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val list = mutableListOf<NoteData>().apply {
-            repeat(10) { index ->
-                add(
-                    NoteData("Note Title $index", "2023-01-01", "Note Content $index")
-                )
-            }
-        }
-        noteListAdapter.addNoteList(list)
+        noteListAdapter.addNoteList(activityViewModel.getNoteList())
     }
 
 }
