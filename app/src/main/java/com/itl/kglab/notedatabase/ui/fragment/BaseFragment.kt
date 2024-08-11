@@ -1,4 +1,4 @@
-package com.itl.kglab.notedatabase.ui
+package com.itl.kglab.notedatabase.ui.fragment
 
 import androidx.fragment.app.Fragment
 import com.itl.kglab.notedatabase.ui.dialog.LoadingDialog

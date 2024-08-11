@@ -1,4 +1,4 @@
-package com.itl.kglab.notedatabase.ui
+package com.itl.kglab.notedatabase.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.itl.kglab.notedatabase.MainListViewModel
+import com.itl.kglab.notedatabase.viewmodel.MainListViewModel
 import com.itl.kglab.notedatabase.databinding.FragmentMainListBinding
 import com.itl.kglab.notedatabase.ui.adapter.NoteListAdapter
 import com.itl.kglab.notedatabase.ui.dialog.DeleteConfirmDialog

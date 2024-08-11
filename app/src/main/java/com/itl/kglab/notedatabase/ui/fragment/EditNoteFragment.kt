@@ -1,4 +1,4 @@
-package com.itl.kglab.notedatabase.ui
+package com.itl.kglab.notedatabase.ui.fragment
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.itl.kglab.notedatabase.EditNoteViewModel
+import com.itl.kglab.notedatabase.viewmodel.EditNoteViewModel
 import com.itl.kglab.notedatabase.databinding.FragmentEditNoteBinding
 import com.itl.kglab.notedatabase.db.NoteData
 import com.itl.kglab.notedatabase.ui.state.EditNoteViewState
