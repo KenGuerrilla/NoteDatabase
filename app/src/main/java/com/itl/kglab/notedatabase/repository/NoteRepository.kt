@@ -15,11 +15,15 @@ class NoteRepository(
         database.noteDao().addNote(noteData)
     }
 
+    suspend fun editNote(noteData: NoteData) = withContext(coroutineDispatcher) {
+        database.noteDao().editNote(noteData)
+    }
+
     suspend fun getNoteList(): List<NoteData> = withContext(coroutineDispatcher) {
         database.noteDao().getAll()
     }
 
-    suspend fun getNoteById(id: Int): NoteData = withContext(coroutineDispatcher) {
+    suspend fun getNoteById(id: Int): NoteData? = withContext(coroutineDispatcher) {
         database.noteDao().getNoteById(id)
     }
 }

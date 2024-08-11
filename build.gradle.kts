@@ -4,4 +4,15 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.google.devtools.ksp) version "1.9.21-1.0.15" apply false
     alias(libs.plugins.androidx.room) apply false
+    alias(libs.plugins.androidx.navigation.args.kotlin) apply false
+}
+
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+
 }

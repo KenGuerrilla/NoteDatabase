@@ -10,36 +10,53 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.itl.kglab.notedatabase.db.AppDatabase
 import com.itl.kglab.notedatabase.db.NoteData
 import com.itl.kglab.notedatabase.repository.NoteRepository
-import com.itl.kglab.notedatabase.ui.state.MainListViewState
+import com.itl.kglab.notedatabase.ui.state.EditNoteViewState
 import kotlinx.coroutines.launch
 
-class MainListViewModel(
+class EditNoteViewModel(
     private val repository: NoteRepository
 ) : ViewModel() {
 
-    private val _viewStateLiveData = MutableLiveData<MainListViewState>()
-    val viewStateLiveData: LiveData<MainListViewState> = _viewStateLiveData
+    private val _viewStateLiveData = MutableLiveData<EditNoteViewState>()
+    val viewStateLiveData: LiveData<EditNoteViewState> = _viewStateLiveData
 
-    fun getNoteList() {
-        _viewStateLiveData.value = MainListViewState.Loading
+    private var noteData: NoteData = NoteData(-1, "", "", "")
+
+    fun updateNote(
+        title: String,
+        date: String,
+        note: String
+    ) {
+        noteData = noteData.copy(
+            title = title,
+            date = date,
+            note = note
+        )
+    }
+
+    fun getNoteDataById(id: Int) {
+        _viewStateLiveData.value = EditNoteViewState.Loading
         viewModelScope.launch {
-            val noteList = repository.getNoteList()
-//            Log.d("TAG", "getNoteList: $noteList")
-            _viewStateLiveData.value = MainListViewState.UpdateView(noteList)
+            val data = repository.getNoteById(id) ?: NoteData(-1, "", "", "")
+            noteData = data
+            _viewStateLiveData.value = EditNoteViewState.InitView(data)
         }
     }
 
-    fun addNote() {
-        _viewStateLiveData.value = MainListViewState.Loading
+    fun saveNote() {
+        _viewStateLiveData.value = EditNoteViewState.Loading
         viewModelScope.launch {
-            repository.addNote(
-                NoteData(id = 0, title = "test", date = "2024/08/11", note = "This is a test note")
-            )
-            getNoteList()
+            if (noteData.id == -1) {
+                repository.addNote(noteData)
+            } else {
+                repository.editNote(noteData)
+            }
+            _viewStateLiveData.value = EditNoteViewState.Confirm
         }
     }
 
     companion object {
+
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
 
@@ -47,11 +64,11 @@ class MainListViewModel(
                 val db = AppDatabase.invoke(application)
                 val repository = NoteRepository(db)
 
-                return MainListViewModel(
+                return EditNoteViewModel(
                     repository = repository
                 ) as T
             }
         }
-    }
 
+    }
 }

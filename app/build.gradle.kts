@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.androidx.navigation.args.kotlin)
 }
 
 android {

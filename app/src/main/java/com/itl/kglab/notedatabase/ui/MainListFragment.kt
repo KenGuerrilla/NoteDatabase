@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.itl.kglab.notedatabase.MainListViewModel
-import com.itl.kglab.notedatabase.R
 import com.itl.kglab.notedatabase.databinding.FragmentMainListBinding
 import com.itl.kglab.notedatabase.ui.adapter.NoteListAdapter
 import com.itl.kglab.notedatabase.ui.state.MainListViewState
@@ -66,8 +65,9 @@ class MainListFragment : BaseFragment() {
 
     private fun initView() {
         binding.btCreateNote.setOnClickListener {
-//            findNavController().navigate(R.id.action_mainListFragment_to_editNoteFragment)
-            viewModel.addNote()
+            val act = MainListFragmentDirections
+                .actionMainListFragmentToEditNoteFragment()
+            findNavController().navigate(act)
         }
     }
 
