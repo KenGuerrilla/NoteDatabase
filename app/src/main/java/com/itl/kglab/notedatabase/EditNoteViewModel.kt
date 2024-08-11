@@ -20,7 +20,7 @@ class EditNoteViewModel(
     private val _viewStateLiveData = MutableLiveData<EditNoteViewState>()
     val viewStateLiveData: LiveData<EditNoteViewState> = _viewStateLiveData
 
-    private var noteData: NoteData = NoteData(-1, "", "", "")
+    private var noteData: NoteData = NoteData(id = 0, title = "", date = "", note = "")
 
     fun updateNote(
         title: String,
@@ -37,7 +37,7 @@ class EditNoteViewModel(
     fun getNoteDataById(id: Int) {
         _viewStateLiveData.value = EditNoteViewState.Loading
         viewModelScope.launch {
-            val data = repository.getNoteById(id) ?: NoteData(-1, "", "", "")
+            val data = repository.getNoteById(id) ?: NoteData(title = "", date = "", note = "")
             noteData = data
             _viewStateLiveData.value = EditNoteViewState.InitView(data)
         }
@@ -46,7 +46,7 @@ class EditNoteViewModel(
     fun saveNote() {
         _viewStateLiveData.value = EditNoteViewState.Loading
         viewModelScope.launch {
-            if (noteData.id == -1) {
+            if (noteData.id == 0) {
                 repository.addNote(noteData)
             } else {
                 repository.editNote(noteData)

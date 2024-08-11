@@ -25,9 +25,11 @@ class NoteListAdapter(
         return noteList.size
     }
 
+
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.binding.apply {
-            tvTitle.text = noteList[position].title
+            val note = noteList[position]
+            tvTitle.text = "${note.title} # ${note.id}"
             tvDate.text = noteList[position].date
         }
     }
