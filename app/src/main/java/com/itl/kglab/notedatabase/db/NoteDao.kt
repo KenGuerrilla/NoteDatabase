@@ -19,6 +19,9 @@ interface NoteDao {
     fun editNote(note: NoteData)
 
     @Insert
+    fun addList(list: List<NoteData>)
+
+    @Insert
     fun addNote(note: NoteData)
 
     @Query("DELETE FROM noteData WHERE id = :id")
