@@ -61,6 +61,12 @@ class MainListFragment : BaseFragment() {
             }
             adapter = noteListAdapter
         }
+
+        noteListAdapter.setItemClickedListener { id ->
+            val act = MainListFragmentDirections
+                .actionMainListFragmentToEditNoteFragment(id)
+            findNavController().navigate(act)
+        }
     }
 
     private fun initView() {

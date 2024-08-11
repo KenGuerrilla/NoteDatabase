@@ -10,6 +10,12 @@ class NoteListAdapter(
     private var noteList: List<NoteData> = mutableListOf()
 ) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
+    private var onItemClicked: ((Int) -> Unit)? = null
+
+    fun setItemClickedListener(listener: (Int) -> Unit) {
+        onItemClicked = listener
+    }
+
     fun updateNoteList(list: List<NoteData>) {
         noteList = list
         notifyDataSetChanged()
@@ -31,6 +37,10 @@ class NoteListAdapter(
             val note = noteList[position]
             tvTitle.text = "${note.title} # ${note.id}"
             tvDate.text = noteList[position].date
+
+            root.setOnClickListener {
+                onItemClicked?.invoke(note.id)
+            }
         }
     }
 
