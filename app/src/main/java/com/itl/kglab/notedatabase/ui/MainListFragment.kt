@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.itl.kglab.notedatabase.MainListViewModel
 import com.itl.kglab.notedatabase.databinding.FragmentMainListBinding
 import com.itl.kglab.notedatabase.ui.adapter.NoteListAdapter
+import com.itl.kglab.notedatabase.ui.dialog.DeleteConfirmDialog
 import com.itl.kglab.notedatabase.ui.state.MainListViewState
 
 class MainListFragment : BaseFragment() {
@@ -67,6 +68,13 @@ class MainListFragment : BaseFragment() {
                 .actionMainListFragmentToEditNoteFragment(id)
             findNavController().navigate(act)
         }
+
+        noteListAdapter.setItemLongClickedListener { id ->
+            // 顯示確認刪除Dialog
+            DeleteConfirmDialog(noteId = id) {
+                viewModel.deleteNoteById(id)
+            }.show(childFragmentManager, "DeleteConfirmDialog")
+        }
     }
 
     private fun initView() {
@@ -76,8 +84,6 @@ class MainListFragment : BaseFragment() {
             findNavController().navigate(act)
         }
     }
-
-
 
     override fun onResume() {
         super.onResume()

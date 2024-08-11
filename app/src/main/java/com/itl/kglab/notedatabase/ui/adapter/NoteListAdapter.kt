@@ -11,9 +11,14 @@ class NoteListAdapter(
 ) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
     private var onItemClicked: ((Int) -> Unit)? = null
+    private var onItemLongClicked: ((Int) -> Unit)? = null
 
     fun setItemClickedListener(listener: (Int) -> Unit) {
         onItemClicked = listener
+    }
+
+    fun setItemLongClickedListener(listener: (Int) -> Unit) {
+        onItemLongClicked = listener
     }
 
     fun updateNoteList(list: List<NoteData>) {
@@ -40,6 +45,11 @@ class NoteListAdapter(
 
             root.setOnClickListener {
                 onItemClicked?.invoke(note.id)
+            }
+
+            root.setOnLongClickListener {
+                onItemLongClicked?.invoke(note.id)
+                true
             }
         }
     }

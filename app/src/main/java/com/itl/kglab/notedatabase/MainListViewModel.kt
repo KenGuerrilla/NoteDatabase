@@ -24,7 +24,6 @@ class MainListViewModel(
         _viewStateLiveData.value = MainListViewState.Loading
         viewModelScope.launch {
             val noteList = repository.getNoteList()
-//            Log.d("TAG", "getNoteList: $noteList")
             _viewStateLiveData.value = MainListViewState.UpdateView(noteList)
         }
     }
@@ -36,6 +35,15 @@ class MainListViewModel(
                 NoteData(id = 0, title = "test", date = "2024/08/11", note = "This is a test note")
             )
             getNoteList()
+        }
+    }
+
+    fun deleteNoteById(id: Int) {
+        _viewStateLiveData.value = MainListViewState.Loading
+        viewModelScope.launch {
+            repository.deleteNoteById(id)
+            val noteList = repository.getNoteList()
+            _viewStateLiveData.value = MainListViewState.UpdateView(noteList)
         }
     }
 

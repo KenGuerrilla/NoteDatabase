@@ -19,6 +19,10 @@ class NoteRepository(
         database.noteDao().editNote(noteData)
     }
 
+    suspend fun deleteNoteById(id: Int) = withContext(coroutineDispatcher) {
+        database.noteDao().deleteById(id)
+    }
+
     suspend fun getNoteList(): List<NoteData> = withContext(coroutineDispatcher) {
         database.noteDao().getAll()
     }
